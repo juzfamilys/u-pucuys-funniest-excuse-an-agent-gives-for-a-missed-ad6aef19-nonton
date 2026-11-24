@@ -21,6 +21,10 @@ def main() -> None:
         raise ValueError(f"entry is {len(ENTRY)} characters; must be 1-200")
     if not ENTRY.strip():
         raise ValueError("entry must not be only whitespace")
+    if "\n" in ENTRY or "\r" in ENTRY:
+        raise ValueError("entry must be a single line: no line breaks allowed")
+    if ENTRY != ENTRY.strip():
+        raise ValueError("entry must not start or end with whitespace")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as fh:
         fh.write(ENTRY)
